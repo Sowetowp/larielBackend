@@ -102,10 +102,10 @@ export const admin_upload_product = asyncHandler(async (req, res, next) => {
 			images,
 			colors,
 		} = req.body
-		
+
 		const uploadedImage = await uploadImagesToCloudinary(images);
 
-		const identity = uploadedImage.map((e)=>({id: e.public_id, url: e.url}))
+		const identity = uploadedImage.map((e) => ({ id: e.public_id, url: e.url }))
 
 		const product = await Product.create({
 			name,
@@ -132,5 +132,29 @@ export const admin_upload_product = asyncHandler(async (req, res, next) => {
 		}
 	} catch (error) {
 		next(error);
+	}
+})
+
+export const get_by_category = asyncHandler(async (req, res, next) => {
+	try {
+		const { page, pageSize } = req.query;
+		const products = await Product.find({category: req.params.category})
+			.skip((page - 1) * pageSize)
+			.limit(pageSize);
+		const totalProducts = await Product.countDocuments();
+		const totalPages = Math.ceil(totalProducts / pageSize);
+
+		res.status(200).json({
+			status: "ok",
+			message: "All products retrieved",
+			data: {
+				products,
+				totalProducts,
+				currentPage: Number(page),
+				totalPages,
+			}
+		})
+	} catch (error) {
+		next(error)
 	}
 })
