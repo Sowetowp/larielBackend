@@ -8,5 +8,33 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_APISECRET,
 });
 
+export const uploadImagesToCloudinary = (images) => {
+  return new Promise((resolve, reject) => {
+    const promises = images.map((image) => {
+      return new Promise((innerResolve, innerReject) => {
+        cloudinary.uploader.upload(
+          image,
+          {
+            upload_preset: "unsigned_upload",
+            allowed_formats: ["png", "jpg", "jpeg", "svg", "ico", "jfif", "webp"],
+          },
+          (error, result) => {
+            if (error) {
+              innerReject(error);
+            } else {
+              innerResolve(result);
+            }
+          }
+        );
+      });
+    });
 
-export default cloudinary
+    Promise.all(promises)
+      .then((results) => {
+        resolve(results);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

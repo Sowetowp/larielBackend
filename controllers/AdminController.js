@@ -1,8 +1,9 @@
 import asyncHandler from 'express-async-handler'
 import { generatetoken } from '../utilities/generate_token.js'
 import bcrypt from 'bcryptjs'
-import cloudinary from '../config/cloudinary.js'
+import { uploadImagesToCloudinary } from '../config/cloudinary.js'
 import Admin from '../models/Admin.js'
+import Product from '../models/Products.js'
 
 export const admin_register = asyncHandler(async (req, res, next) => {
 	try {
@@ -82,6 +83,53 @@ export const admin_auth = asyncHandler(async (req, res, next) => {
 				token: generatetoken(admin._id)
 			}
 		})
+	} catch (error) {
+		next(error);
+	}
+})
+
+export const admin_upload_product = asyncHandler(async (req, res, next) => {
+	try {
+		const {
+			name,
+			code,
+			category,
+			subCategory,
+			price,
+			quantity,
+			description,
+			sizes,
+			images,
+			colors,
+		} = req.body
+		
+		const uploadedImage = await uploadImagesToCloudinary(images);
+
+		const identity = uploadedImage.map((e)=>({id: e.public_id, url: e.url}))
+
+		const product = await Product.create({
+			name,
+			code,
+			category,
+			subCategory,
+			price,
+			quantity,
+			description,
+			sizes,
+			images: identity,
+			colors,
+		})
+
+		if (product) {
+			res.status(201).json({
+				message: 'Product uploaded successfully',
+				status: 'ok',
+				data: product
+			})
+		} else {
+			res.status(400)
+			throw new Error('Invalid data provided.')
+		}
 	} catch (error) {
 		next(error);
 	}
