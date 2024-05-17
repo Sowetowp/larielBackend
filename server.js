@@ -8,6 +8,7 @@ import {errorHandler} from "./middlewares/error-handler.js"
 
 import connectDB from "./config/db.js"
 import admin_router from "./routes/AdminRoutes.js"
+import user_router from "./routes/UserRoutes.js"
 
 dotenv.config({path: "./config/.env"});
 connectDB().then()
@@ -20,6 +21,7 @@ app.use(express.json({limit: "50mb"}))
 app.use(express.urlencoded({extended: "true", limit: "50mb"}))
 app.use(fileUpload());
 app.use("/api/admin", admin_router)
+app.use("/api/user", user_router)
 
 app.use(errorHandler)
 
