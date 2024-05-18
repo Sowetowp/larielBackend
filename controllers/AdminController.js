@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler'
 import { generatetoken } from '../utilities/generate_token.js'
 import bcrypt from 'bcryptjs'
-import { uploadImagesToCloudinary } from '../config/cloudinary.js'
+import { deleteImagesFromCloudinary, uploadImagesToCloudinary } from '../config/cloudinary.js'
 import Admin from '../models/Admin.js'
 import Product from '../models/Products.js'
 
@@ -132,5 +132,28 @@ export const admin_upload_product = asyncHandler(async (req, res, next) => {
 		}
 	} catch (error) {
 		next(error);
+	}
+})
+
+export const delete_single_product = asyncHandler(async (req, res, next) => {
+	try {
+		const productDetail = await Product.findById(req.params.id)
+		if (productDetail) {
+			const deletedImages = await deleteImagesFromCloudinary(productDetail.images)
+			console.log(deletedImages)
+			const product = await Product.findByIdAndDelete(req.params.id)
+			if (product) {
+				res.status(200).json({
+					status: "ok",
+					message: "Product deleted successfully",
+				})
+			} else {
+				throw new Error("Something went wrong.")
+			}
+		} else {
+			throw new Error("Not found")
+		}
+	} catch (error) {
+		next(error)
 	}
 })
