@@ -13,6 +13,8 @@ const productSchema = mongoose.Schema(
 		images: [{ type: Object, require: true }],
 		colors: [{ type: Object, require: true }],
 		prevPrice: { type: Number, default: 0 },
+		model: { type: Object },
+		status: {type: String, enum: ["Active", "Closed"], default: "Active"}
 	},
 	{
 		timestamps: true,

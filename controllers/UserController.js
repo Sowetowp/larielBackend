@@ -8,9 +8,9 @@ export const get_by_category = asyncHandler(async (req, res, next) => {
 		const { page, pageSize } = req.query;
 		const { category, subCategory } = req.params;
 		let query = {};
-		if(subCategory !== "undefined"){
+		if (subCategory !== "undefined") {
 			query.category = { $all: [category, subCategory] }
-		}else if(category !== "undefined"){
+		} else if (category !== "undefined") {
 			query.category = { $in: [category] }
 		}
 		const products = await Product.find(query)
@@ -28,6 +28,23 @@ export const get_by_category = asyncHandler(async (req, res, next) => {
 				totalPages,
 			}
 		})
+	} catch (error) {
+		next(error)
+	}
+})
+
+export const get_single_item = asyncHandler(async (req, res, next) => {
+	try {
+		const product = await Product.findById(req.params.id)
+		if (product) {
+			res.status(200).json({
+				status: "ok",
+				message: "All products retrieved",
+				data: product
+			})
+		}else{
+			res.status(404).json({ message: 'Product not found' });
+		}
 	} catch (error) {
 		next(error)
 	}

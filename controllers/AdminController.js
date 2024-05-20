@@ -176,7 +176,8 @@ export const update_product = asyncHandler(async (req, res, next) => {
 			images,
 			colors,
 			images2,
-			imagesToDelete
+			imagesToDelete,
+			prevPrice
 		} = req.body
 		const uploadedImage = await uploadImagesToCloudinary(images);
 		const deletedImages = await deleteImagesFromCloudinary(imagesToDelete)
@@ -193,7 +194,7 @@ export const update_product = asyncHandler(async (req, res, next) => {
 			product.sizes = sizes || product.sizes,
 			product.images = newimages || product.images,
 			product.colors = colors || product.colors,
-			product.prevPrice = product.price
+			product.prevPrice = prevPrice || product.prevPrice
 
 			const updated = await product.save()
 			if (updated) {
