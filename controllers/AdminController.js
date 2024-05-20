@@ -140,7 +140,6 @@ export const delete_single_product = asyncHandler(async (req, res, next) => {
 		const productDetail = await Product.findById(req.params.id)
 		if (productDetail) {
 			const deletedImages = await deleteImagesFromCloudinary(productDetail.images)
-			console.log(deletedImages)
 			const product = await Product.findByIdAndDelete(req.params.id)
 			if (product) {
 				res.status(200).json({
@@ -155,5 +154,60 @@ export const delete_single_product = asyncHandler(async (req, res, next) => {
 		}
 	} catch (error) {
 		next(error)
+	}
+})
+
+export const update_product = asyncHandler(async (req, res, next) => {
+	try {
+		const product = await Product.findById(req.params.id)
+		if (!product) {
+			res.status(404).json({ message: 'Product not found' });
+			return;
+		}
+		const {
+			name,
+			code,
+			category,
+			imageColor,
+			price,
+			quantity,
+			description,
+			sizes,
+			images,
+			colors,
+			images2,
+			imagesToDelete
+		} = req.body
+		const uploadedImage = await uploadImagesToCloudinary(images);
+		const deletedImages = await deleteImagesFromCloudinary(imagesToDelete)
+		const identity = uploadedImage.map((e) => ({ id: e.public_id, url: e.url }))
+		const newimages = [images2, identity].flat()
+		if (product) {
+			product.name = name || product.name
+			product.code = code || product.code,
+			product.category = category || product.category,
+			product.imageColor = imageColor || product.imageColor,
+			product.price = price || product.price,
+			product.quantity = quantity || product.quantity,
+			product.description = description || product.description,
+			product.sizes = sizes || product.sizes,
+			product.images = newimages || product.images,
+			product.colors = colors || product.colors,
+			product.prevPrice = product.price
+
+			const updated = await product.save()
+			if (updated) {
+				res.status(201).json({
+					message: 'Product successfully updated!!',
+					status: 'ok',
+					data: updated
+				})
+			}
+		} else {
+			res.status(401)
+			throw new Error('Something went wrong.')
+		}
+	} catch (error) {
+		next(error);
 	}
 })

@@ -1,5 +1,5 @@
 import express from 'express'
-import { admin_auth, admin_register, admin_upload_product, delete_single_product } from '../controllers/AdminController.js'
+import { admin_auth, admin_register, admin_upload_product, delete_single_product, update_product } from '../controllers/AdminController.js'
 import * as AdminValidation from "../Validations/adminValidation.js"
 import { adminProtect } from '../middlewares/auth_handlers.js'
 
@@ -13,5 +13,7 @@ router.route('/adminupload')
     .post(adminProtect, admin_upload_product)
 router.route('/deleteitem/:id')
     .delete(adminProtect, delete_single_product)
+router.route('/updateitem/:id')
+    .patch(adminProtect, update_product)
 
 export default router
