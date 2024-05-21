@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 import { deleteImagesFromCloudinary, uploadImagesToCloudinary } from '../config/cloudinary.js'
 import Admin from '../models/Admin.js'
 import Product from '../models/Products.js'
+import Review from '../models/Review.js'
 
 export const admin_register = asyncHandler(async (req, res, next) => {
 	try {
@@ -183,7 +184,7 @@ export const update_product = asyncHandler(async (req, res, next) => {
 		const deletedImages = await deleteImagesFromCloudinary(imagesToDelete)
 		const identity = uploadedImage.map((e) => ({ id: e.public_id, url: e.url }))
 		const newimages = [images2, identity].flat()
-		if (product) {
+
 			product.name = name || product.name
 			product.code = code || product.code,
 			product.category = category || product.category,
@@ -196,17 +197,83 @@ export const update_product = asyncHandler(async (req, res, next) => {
 			product.colors = colors || product.colors,
 			product.prevPrice = prevPrice || product.prevPrice
 
-			const updated = await product.save()
-			if (updated) {
-				res.status(201).json({
-					message: 'Product successfully updated!!',
-					status: 'ok',
-					data: updated
-				})
+		const updated = await product.save()
+		if (updated) {
+			res.status(201).json({
+				message: 'Product successfully updated!!',
+				status: 'ok',
+				data: updated
+			})
+		}
+	} catch (error) {
+		next(error);
+	}
+})
+
+export const approved_reviews = asyncHandler(async (req, res, next) => {
+	try {
+		const { page, pageSize } = req.query;
+		const reviews = await Review.find({ approved: true })
+			.populate("product", "name")
+			.skip((page - 1) * pageSize)
+			.limit(pageSize);
+		const totalReviews = await Review.countDocuments({ approved: true });
+		const totalPages = Math.ceil(totalReviews / pageSize);
+		res.status(200).json({
+			status: "ok",
+			message: "Reviews retrieved",
+			data: {
+				reviews,
+				totalReviews,
+				currentPage: Number(page),
+				totalPages,
 			}
-		} else {
-			res.status(401)
-			throw new Error('Something went wrong.')
+		})
+	} catch (error) {
+		next(error)
+	}
+})
+
+export const pending_reviews = asyncHandler(async (req, res, next) => {
+	try {
+		const { page, pageSize } = req.query;
+		const reviews = await Review.find({ approved: false })
+			.populate("product", "name")
+			.skip((page - 1) * pageSize)
+			.limit(pageSize);
+		const totalReviews = await Review.countDocuments({ approved: false });
+		const totalPages = Math.ceil(totalReviews / pageSize);
+		res.status(200).json({
+			status: "ok",
+			message: "Reviews retrieved",
+			data: {
+				reviews,
+				totalReviews,
+				currentPage: Number(page),
+				totalPages,
+			}
+		})
+	} catch (error) {
+		next(error)
+	}
+})
+
+export const update_review = asyncHandler(async (req, res, next) => {
+	try {
+		const review = await Review.findById(req.params.id)
+		if (!review) {
+			res.status(404).json({ message: 'Review not found' });
+			return;
+		}
+		const { approved = review.approved } = req.body;
+		review.approved = approved;
+		const updated = await review.save()
+		if (updated) {
+			res.status(201).json({
+				message: 'Success!!',
+				status: 'ok',
+				data: updated
+			})
 		}
 	} catch (error) {
 		next(error);
