@@ -185,8 +185,8 @@ export const update_product = asyncHandler(async (req, res, next) => {
 		const identity = uploadedImage.map((e) => ({ id: e.public_id, url: e.url }))
 		const newimages = [images2, identity].flat()
 
-			product.name = name || product.name
-			product.code = code || product.code,
+		product.name = name || product.name
+		product.code = code || product.code,
 			product.category = category || product.category,
 			product.imageColor = imageColor || product.imageColor,
 			product.price = price || product.price,
@@ -214,6 +214,7 @@ export const approved_reviews = asyncHandler(async (req, res, next) => {
 	try {
 		const { page, pageSize } = req.query;
 		const reviews = await Review.find({ approved: true })
+			.sort({ createdAt: -1 })
 			.populate("product", "name")
 			.skip((page - 1) * pageSize)
 			.limit(pageSize);
@@ -238,6 +239,7 @@ export const pending_reviews = asyncHandler(async (req, res, next) => {
 	try {
 		const { page, pageSize } = req.query;
 		const reviews = await Review.find({ approved: false })
+			.sort({ createdAt: -1 })
 			.populate("product", "name")
 			.skip((page - 1) * pageSize)
 			.limit(pageSize);

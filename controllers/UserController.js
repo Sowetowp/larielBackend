@@ -11,10 +11,13 @@ export const get_by_category = asyncHandler(async (req, res, next) => {
 		let query = {};
 		if (subCategory !== "undefined") {
 			query.category = { $all: [category, subCategory] }
+		} else if (category === "Sale") {
+			query = { $expr: { $gt: ["$prevPrice", "$price"] } }
 		} else if (category !== "undefined") {
 			query.category = { $in: [category] }
 		}
 		const products = await Product.find(query)
+			.sort({ createdAt: -1 })
 			.skip((page - 1) * pageSize)
 			.limit(pageSize);
 		const totalProducts = await Product.countDocuments();
@@ -86,7 +89,7 @@ export const post_review = asyncHandler(async (req, res, next) => {
 
 export const get_reviews = asyncHandler(async (req, res, next) => {
 	try {
-		const myReviews = await Review.find({product: req.params.id, approved: true})
+		const myReviews = await Review.find({ product: req.params.id, approved: true }).sort({ createdAt: -1 })
 		if (myReviews) {
 			res.status(200).json({
 				message: 'Reviews fetched successfully',
