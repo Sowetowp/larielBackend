@@ -185,8 +185,8 @@ export const update_product = asyncHandler(async (req, res, next) => {
 		const identity = uploadedImage.map((e) => ({ id: e.public_id, url: e.url }))
 		const newimages = [images2, identity].flat()
 
-		product.name = name || product.name
-		product.code = code || product.code,
+		product.name = name || product.name,
+			product.code = code || product.code,
 			product.category = category || product.category,
 			product.imageColor = imageColor || product.imageColor,
 			product.price = price || product.price,

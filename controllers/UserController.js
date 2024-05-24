@@ -3,6 +3,9 @@ import { generatetoken } from '../utilities/generate_token.js'
 import bcrypt from 'bcryptjs'
 import Product from '../models/Products.js'
 import Review from '../models/Review.js'
+import User from '../models/User.js'
+import BillingAddress from '../models/BillingAddress.js'
+import ShippingAddress from '../models/ShippingAddress.js'
 
 export const get_by_category = asyncHandler(async (req, res, next) => {
 	try {
@@ -99,6 +102,209 @@ export const get_reviews = asyncHandler(async (req, res, next) => {
 		} else {
 			res.status(400)
 			throw new Error('Invalid data provided.')
+		}
+	} catch (error) {
+		next(error);
+	}
+})
+
+export const user_register = asyncHandler(async (req, res, next) => {
+	try {
+		const {
+			email,
+			password,
+		} = req.body
+
+		const userExists = await User.find({ email })
+		if (userExists.length > 0) {
+			throw new Error('User exists already')
+		}
+
+		const hashedPass = await bcrypt.hash(password, 10)
+		const username = email.split("@")
+		const user = await User.create({
+			email,
+			password: hashedPass,
+			displayName: username[0]
+		})
+
+		if (user) {
+			res.status(201).json({
+				message: 'User registered successfully',
+				status: 'ok',
+				data: {
+					id: user._id,
+					firstName: user.firstName,
+					lastName: user.lastName,
+					email: user.email,
+					displayName: user.displayName,
+					password: user.password,
+					token: generatetoken(user._id)
+				}
+			})
+		} else {
+			res.status(400)
+			throw new Error('Invalid data provided.')
+		}
+	} catch (error) {
+		next(error);
+	}
+})
+
+export const user_auth = asyncHandler(async (req, res, next) => {
+	try {
+		const {
+			email,
+			password,
+		} = req.body
+
+		const user = await User.findOne({ email })
+
+		if (!user) {
+			throw new Error('User not found')
+		}
+		if (!bcrypt.compareSync(password, user.password)) {
+			throw new Error('Incorrect password')
+		}
+
+		res.status(201).json({
+			message: `Welcome ${user.displayName}`,
+			status: 'ok',
+			data: {
+				id: user._id,
+				firstName: user.firstName,
+				lastName: user.lastName,
+				email: user.email,
+				displayName: user.displayName,
+				password: user.password,
+				token: generatetoken(user._id)
+			}
+		})
+	} catch (error) {
+		next(error);
+	}
+})
+
+export const billing_address_register = asyncHandler(async (req, res, next) => {
+	try {
+		const {
+			firstName,
+			lastName,
+			companyName,
+			country,
+			address,
+			appartment,
+			town,
+			state,
+			phoneNumber,
+			email,
+			user
+		} = req.body
+
+		const billing = await BillingAddress.find({ user })
+		if (billing) {
+			billing.firstName = firstName || billing.firstName,
+				billing.lastName = lastName || billing.lastName,
+				billing.companyName = companyName || billing.companyName,
+				billing.country = country || billing.country,
+				billing.address = address || billing.address,
+				billing.appartment = appartment || billing.appartment,
+				billing.town = town || billing.town,
+				billing.state = state || billing.state,
+				billing.phoneNumber = phoneNumber || billing.phoneNumber,
+				billing.email = email || billing.email
+			const updated = await BillingAddress.save()
+			if (updated) {
+				res.status(201).json({
+					message: 'Address updated successfully',
+					status: 'ok',
+					data: updated
+				})
+			}
+		} else {
+			const newBilling = await BillingAddress.create({
+				firstName,
+				lastName,
+				companyName,
+				country,
+				address,
+				appartment,
+				town,
+				state,
+				phoneNumber,
+				email,
+				user
+			})
+			if (newBilling) {
+				res.status(201).json({
+					message: 'Address registered successfully',
+					status: 'ok',
+					data: newBilling
+				})
+			}
+		}
+	} catch (error) {
+		next(error);
+	}
+})
+
+export const shipping_address_register = asyncHandler(async (req, res, next) => {
+	try {
+		const {
+			firstName,
+			lastName,
+			companyName,
+			country,
+			address,
+			appartment,
+			town,
+			state,
+			phoneNumber,
+			email,
+			user
+		} = req.body
+
+		const shipping = await ShippingAddress.find({ user })
+		if (shipping) {
+			shipping.firstName = firstName || shipping.firstName,
+				shipping.lastName = lastName || shipping.lastName,
+				shipping.companyName = companyName || shipping.companyName,
+				shipping.country = country || shipping.country,
+				shipping.address = address || shipping.address,
+				shipping.appartment = appartment || shipping.appartment,
+				shipping.town = town || shipping.town,
+				shipping.state = state || shipping.state,
+				shipping.phoneNumber = phoneNumber || shipping.phoneNumber,
+				shipping.email = email || shipping.email
+			const updated = await ShippingAddress.save()
+			if (updated) {
+				res.status(201).json({
+					message: 'Address updated successfully',
+					status: 'ok',
+					data: updated
+				})
+			}
+		} else {
+			const newShipping = await ShippingAddress.create({
+				firstName,
+				lastName,
+				companyName,
+				country,
+				address,
+				appartment,
+				town,
+				state,
+				phoneNumber,
+				email,
+				user
+			})
+			if (newShipping) {
+				res.status(201).json({
+					message: 'Address registered successfully',
+					status: 'ok',
+					data: newShipping
+				})
+			}
 		}
 	} catch (error) {
 		next(error);
