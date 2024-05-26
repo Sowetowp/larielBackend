@@ -201,7 +201,7 @@ export const billing_address_register = asyncHandler(async (req, res, next) => {
 			user
 		} = req.body
 
-		const billing = await BillingAddress.find({ user })
+		const billing = await BillingAddress.findOne({ user })
 		if (billing) {
 			billing.firstName = firstName || billing.firstName,
 				billing.lastName = lastName || billing.lastName,
@@ -213,7 +213,7 @@ export const billing_address_register = asyncHandler(async (req, res, next) => {
 				billing.state = state || billing.state,
 				billing.phoneNumber = phoneNumber || billing.phoneNumber,
 				billing.email = email || billing.email
-			const updated = await BillingAddress.save()
+			const updated = await billing.save()
 			if (updated) {
 				res.status(201).json({
 					message: 'Address updated successfully',
@@ -264,7 +264,7 @@ export const shipping_address_register = asyncHandler(async (req, res, next) => 
 			user
 		} = req.body
 
-		const shipping = await ShippingAddress.find({ user })
+		const shipping = await ShippingAddress.findOne({ user })
 		if (shipping) {
 			shipping.firstName = firstName || shipping.firstName,
 				shipping.lastName = lastName || shipping.lastName,
@@ -276,7 +276,7 @@ export const shipping_address_register = asyncHandler(async (req, res, next) => 
 				shipping.state = state || shipping.state,
 				shipping.phoneNumber = phoneNumber || shipping.phoneNumber,
 				shipping.email = email || shipping.email
-			const updated = await ShippingAddress.save()
+			const updated = await shipping.save()
 			if (updated) {
 				res.status(201).json({
 					message: 'Address updated successfully',
@@ -308,5 +308,26 @@ export const shipping_address_register = asyncHandler(async (req, res, next) => 
 		}
 	} catch (error) {
 		next(error);
+	}
+})
+
+export const get_billing_and_shipping = asyncHandler(async (req, res, next) => {
+	try {
+		const { user } = req.body
+		const billing = await BillingAddress.findOne({user})
+		if(!billing){
+			throw new Error("Not found")
+		}
+		const shipping = await ShippingAddress.findOne({user})
+		res.status(200).json({
+			message: 'Reviews fetched successfully',
+			status: 'ok',
+			data: {
+				billing: billing,
+				shipping: shipping
+			}
+		})
+	} catch (error) {
+		next(error)
 	}
 })

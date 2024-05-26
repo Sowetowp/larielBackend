@@ -11,8 +11,8 @@ const shippingAddressSchema = mongoose.Schema(
 		town: { type: String},
 		state: { type: String, require: true},
 		phoneNumber: { type: String, require: true},
-		email: { type: String, require: true, unique: true },
-		user: { type: String, require: true, unique: true }
+		email: { type: String, require: true },
+		user: { type: String, require: true }
 	},
 	{
 		timestamps: true,
