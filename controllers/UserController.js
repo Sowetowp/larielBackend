@@ -418,8 +418,8 @@ export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 			message: 'Fetched successfully',
 			status: 'ok',
 			data: {
-				wishlist: wishlist,
-				cart: cart
+				wishlist: wishlist.wishlist,
+				cart: cart.cart
 			}
 		})
 	} catch (error) {
