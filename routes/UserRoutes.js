@@ -1,7 +1,7 @@
 import express from 'express'
 import * as UserValidation from "../Validations/UserValidation.js"
 import * as AddressValidation from "../Validations/AddressValidation.js"
-import { billing_address_register, get_billing_and_shipping, get_by_category, get_reviews, get_single_item, get_wishlist_and_cart, post_review, shipping_address_register, user_auth, user_register } from '../controllers/UserController.js'
+import { billing_address_register, cart_register, get_billing_and_shipping, get_by_category, get_reviews, get_single_item, get_wishlist_and_cart, post_review, shipping_address_register, user_auth, user_register, wishlist_register } from '../controllers/UserController.js'
 
 const router = express.Router()
 
@@ -16,9 +16,9 @@ router.route('/getbillingandshipping')
 router.route('/getwishlistandcart')
     .post(get_wishlist_and_cart)
 router.route('/postwishlist')
-    .post(get_billing_and_shipping)
+    .post(wishlist_register)
 router.route('/postcart')
-    .post(get_billing_and_shipping)
+    .post(cart_register)
 router.route('/login')
     .post(UserValidation.signin, user_auth)
 router.route('/postreview')
