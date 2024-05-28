@@ -353,7 +353,7 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 				})
 			}
 		} else {
-			const newShipping = await ShippingAddress.create({
+			const newCart = await Cart.create({
 				firstName,
 				lastName,
 				companyName,
