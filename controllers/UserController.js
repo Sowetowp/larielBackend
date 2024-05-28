@@ -181,8 +181,9 @@ export const user_auth = asyncHandler(async (req, res, next) => {
 				displayName: user.displayName,
 				password: user.password,
 				token: generatetoken(user._id)
-			}
-			
+			},
+			wishlist: wish,
+			cart: car
 		})
 	} catch (error) {
 		next(error);
