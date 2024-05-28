@@ -143,6 +143,7 @@ export const user_register = asyncHandler(async (req, res, next) => {
 					password: user.password,
 					token: generatetoken(user._id)
 				}
+				
 			})
 		} else {
 			res.status(400)
