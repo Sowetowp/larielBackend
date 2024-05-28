@@ -382,7 +382,7 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 		if (wishlistExists) {
 			wishlistExists.wishlist = wishlist || wishlistExists.wishlist
 				
-			const updated = await Wishlist.save()
+			const updated = await wishlistExists.save()
 			if (updated) {
 				res.status(201).json({
 					message: 'Wishlist updated successfully',
