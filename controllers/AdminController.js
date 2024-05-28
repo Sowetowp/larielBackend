@@ -199,7 +199,7 @@ export const update_product = asyncHandler(async (req, res, next) => {
 			product.images = newimages || product.images,
 			product.colors = colors || product.colors,
 			product.prevPrice = prevPrice || product.prevPrice,
-			product.model = model || product,model
+			product.model = model || product.model
 
 		const updated = await product.save()
 		if (updated) {
