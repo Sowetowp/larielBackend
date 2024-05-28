@@ -439,8 +439,6 @@ export const create_order = asyncHandler(async (req, res, next) => {
 			owner
 		} = req.body
 
-		const hashedPass = await bcrypt.hash(password, 10)
-		const username = email.split("@")
 		const user = await User.create({
 			email,
 			password: hashedPass,
