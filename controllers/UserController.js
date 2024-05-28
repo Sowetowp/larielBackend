@@ -6,6 +6,7 @@ import Review from '../models/Review.js'
 import User from '../models/User.js'
 import BillingAddress from '../models/BillingAddress.js'
 import ShippingAddress from '../models/ShippingAddress.js'
+import Cart from '../models/Cart.js'
 
 export const get_by_category = asyncHandler(async (req, res, next) => {
 	try {
@@ -339,7 +340,7 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 			user
 		} = req.body
 
-		const  = await ShippingAddress.findOne({ user })
+		const cartExists = await Cart.findOne({ user })
 		if (shipping) {
 			shipping.firstName = firstName || shipping.firstName,
 				shipping.lastName = lastName || shipping.lastName,
