@@ -142,8 +142,7 @@ export const user_register = asyncHandler(async (req, res, next) => {
 					displayName: user.displayName,
 					password: user.password,
 					token: generatetoken(user._id)
-				},
-				wishlist: 
+				}
 			})
 		} else {
 			res.status(400)
