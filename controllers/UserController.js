@@ -331,3 +331,66 @@ export const get_billing_and_shipping = asyncHandler(async (req, res, next) => {
 		next(error)
 	}
 })
+
+export const shipping_address_register = asyncHandler(async (req, res, next) => {
+	try {
+		const {
+			firstName,
+			lastName,
+			companyName,
+			country,
+			address,
+			appartment,
+			town,
+			state,
+			phoneNumber,
+			email,
+			user
+		} = req.body
+
+		const shipping = await ShippingAddress.findOne({ user })
+		if (shipping) {
+			shipping.firstName = firstName || shipping.firstName,
+				shipping.lastName = lastName || shipping.lastName,
+				shipping.companyName = companyName || shipping.companyName,
+				shipping.country = country || shipping.country,
+				shipping.address = address || shipping.address,
+				shipping.appartment = appartment || shipping.appartment,
+				shipping.town = town || shipping.town,
+				shipping.state = state || shipping.state,
+				shipping.phoneNumber = phoneNumber || shipping.phoneNumber,
+				shipping.email = email || shipping.email
+			const updated = await shipping.save()
+			if (updated) {
+				res.status(201).json({
+					message: 'Address updated successfully',
+					status: 'ok',
+					data: updated
+				})
+			}
+		} else {
+			const newShipping = await ShippingAddress.create({
+				firstName,
+				lastName,
+				companyName,
+				country,
+				address,
+				appartment,
+				town,
+				state,
+				phoneNumber,
+				email,
+				user
+			})
+			if (newShipping) {
+				res.status(201).json({
+					message: 'Address registered successfully',
+					status: 'ok',
+					data: newShipping
+				})
+			}
+		}
+	} catch (error) {
+		next(error);
+	}
+})
