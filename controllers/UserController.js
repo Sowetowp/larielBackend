@@ -385,7 +385,7 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 			const updated = await Wishlist.save()
 			if (updated) {
 				res.status(201).json({
-					message: 'Cart updated successfully',
+					message: 'Wishlist updated successfully',
 					status: 'ok',
 					data: updated
 				})
