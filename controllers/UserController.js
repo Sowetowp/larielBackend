@@ -432,8 +432,17 @@ export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 export const create_order = asyncHandler(async (req, res, next) => {
 	try {
 		const {
-			email,
-			password,
+			cart: [{ type: Object, required: true }],
+        billingAddress: { 
+            type: mongoose.Schema.Types.ObjectId,
+			required: true,
+			ref: 'BillingAddress',
+        },
+        shippingAddress: { 
+            type: mongoose.Schema.Types.ObjectId,
+			ref: 'ShippingAddress',
+        },
+		orderNotes
 		} = req.body
 
 		const userExists = await User.find({ email })
