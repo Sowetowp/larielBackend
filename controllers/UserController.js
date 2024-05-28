@@ -377,7 +377,7 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 			user
 		} = req.body
 
-		const cartExists = await Cart.findOne({ user })
+		const wishlistExists = await Cart.findOne({ user })
 		if (cartExists) {
 			cartExists.cart = cart || cartExists.cart
 				
