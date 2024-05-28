@@ -347,7 +347,7 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 			const updated = await cartExists.save()
 			if (updated) {
 				res.status(201).json({
-					message: 'Address updated successfully',
+					message: 'Cart updated successfully',
 					status: 'ok',
 					data: updated
 				})
