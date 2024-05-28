@@ -350,7 +350,7 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 				res.status(201).json({
 					message: 'Cart updated successfully',
 					status: 'ok',
-					data: updated
+					data: updated.cart
 				})
 			}
 		} else {
