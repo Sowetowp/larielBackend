@@ -399,7 +399,7 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 				res.status(201).json({
 					message: 'Wishlist created successfully',
 					status: 'ok',
-					data: newWishlist
+					data: newWishlist.wishlist
 				})
 			}
 		}
