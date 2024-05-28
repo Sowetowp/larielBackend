@@ -8,11 +8,11 @@ const orderSchema = mongoose.Schema(
 			required: true,
 			ref: 'BillingAddress',
         },
-        shippingAddress: { 
+        shippingAddress: {
             type: mongoose.Schema.Types.ObjectId,
 			ref: 'ShippingAddress',
         },
-		shippingAddress: { 
+		owner: {
             type: mongoose.Schema.Types.ObjectId,
 			ref: 'ShippingAddress',
         },
