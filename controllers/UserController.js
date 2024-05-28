@@ -387,7 +387,7 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 				res.status(201).json({
 					message: 'Wishlist updated successfully',
 					status: 'ok',
-					data: updated
+					data: updated.wishlist
 				})
 			}
 		} else {
