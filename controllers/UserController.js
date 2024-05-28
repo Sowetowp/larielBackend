@@ -432,7 +432,7 @@ export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 export const create_order = asyncHandler(async (req, res, next) => {
 	try {
 		const {
-			cart: [{ type: Object, required: true }],
+			cart,
         billingAddress: { 
             type: mongoose.Schema.Types.ObjectId,
 			required: true,
