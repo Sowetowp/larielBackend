@@ -168,7 +168,7 @@ export const user_auth = asyncHandler(async (req, res, next) => {
 		if (!bcrypt.compareSync(password, user.password)) {
 			throw new Error('Incorrect password')
 		}
-
+		
 		res.status(201).json({
 			message: `Welcome ${user.displayName}`,
 			status: 'ok',
