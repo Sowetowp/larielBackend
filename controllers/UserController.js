@@ -463,7 +463,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 	}
 })
 
-export const delete_single_product = asyncHandler(async (req, res, next) => {
+export const delete_cart = asyncHandler(async (req, res, next) => {
 	try {
 		const productDetail = await Product.findById(req.params.id)
 		if (productDetail) {
