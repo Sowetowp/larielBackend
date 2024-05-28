@@ -373,7 +373,7 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 export const wishlist_register = asyncHandler(async (req, res, next) => {
 	try {
 		const {
-			cart,
+			wishlist,
 			user
 		} = req.body
 
