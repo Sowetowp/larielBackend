@@ -419,7 +419,7 @@ export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 			status: 'ok',
 			data: {
 				wishlist: wishlist,
-				shipping: shipping
+				cart: cart
 			}
 		})
 	} catch (error) {
