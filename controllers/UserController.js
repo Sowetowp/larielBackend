@@ -462,25 +462,3 @@ export const create_order = asyncHandler(async (req, res, next) => {
 		next(error);
 	}
 })
-
-export const delete_cart = asyncHandler(async (req, res, next) => {
-	try {
-		const productDetail = await Product.findById(req.params.id)
-		if (productDetail) {
-			const deletedImages = await deleteImagesFromCloudinary(productDetail.images)
-			const product = await Product.findByIdAndDelete(req.params.id)
-			if (product) {
-				res.status(200).json({
-					status: "ok",
-					message: "Product deleted successfully",
-				})
-			} else {
-				throw new Error("Something went wrong.")
-			}
-		} else {
-			throw new Error("Not found")
-		}
-	} catch (error) {
-		next(error)
-	}
-})
