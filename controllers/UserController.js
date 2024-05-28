@@ -341,7 +341,7 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 		} = req.body
 
 		const cartExists = await Cart.findOne({ user })
-		if (shipping) {
+		if (cartExists) {
 			shipping.firstName = firstName || shipping.firstName,
 				shipping.lastName = lastName || shipping.lastName,
 				shipping.companyName = companyName || shipping.companyName,
