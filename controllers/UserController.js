@@ -441,12 +441,14 @@ export const create_order = asyncHandler(async (req, res, next) => {
 		} = req.body
 
 		const order = await Order.create({
-			email,
-			password: hashedPass,
-			displayName: username[0]
+			cart,
+			billingAddress,
+			shippingAddress,
+			orderNotes,
+			owner
 		})
 
-		if (user) {
+		if (order) {
 			res.status(201).json({
 				message: 'User registered successfully',
 				status: 'ok',
