@@ -415,7 +415,7 @@ export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 		const cart = await Cart.findOne({user})
 		
 		res.status(200).json({
-			message: 'Reviews fetched successfully',
+			message: 'Fetched successfully',
 			status: 'ok',
 			data: {
 				billing: billing,
