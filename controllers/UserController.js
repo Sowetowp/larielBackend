@@ -168,8 +168,8 @@ export const user_auth = asyncHandler(async (req, res, next) => {
 		if (!bcrypt.compareSync(password, user.password)) {
 			throw new Error('Incorrect password')
 		}
-		const wish = await Wishlist.findOne({user: user._id})
-		const car = await Cart.findOne({user: user._id})
+		const wish = await Wishlist.findOne({ user: user._id })
+		const car = await Cart.findOne({ user: user._id })
 		res.status(201).json({
 			message: `Welcome ${user.displayName}`,
 			status: 'ok',
@@ -319,11 +319,11 @@ export const shipping_address_register = asyncHandler(async (req, res, next) => 
 export const get_billing_and_shipping = asyncHandler(async (req, res, next) => {
 	try {
 		const { user } = req.body
-		const billing = await BillingAddress.findOne({user})
-		if(!billing){
+		const billing = await BillingAddress.findOne({ user })
+		if (!billing) {
 			throw new Error("Not found")
 		}
-		const shipping = await ShippingAddress.findOne({user})
+		const shipping = await ShippingAddress.findOne({ user })
 		res.status(200).json({
 			message: 'Reviews fetched successfully',
 			status: 'ok',
@@ -347,7 +347,7 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 		const cartExists = await Cart.findOne({ user })
 		if (cartExists) {
 			cartExists.cart = cart || cartExists.cart
-				
+
 			const updated = await cartExists.save()
 			if (updated) {
 				res.status(201).json({
@@ -383,7 +383,7 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 		const wishlistExists = await Wishlist.findOne({ user })
 		if (wishlistExists) {
 			wishlistExists.wishlist = wishlist || wishlistExists.wishlist
-				
+
 			const updated = await wishlistExists.save()
 			if (updated) {
 				res.status(201).json({
@@ -413,9 +413,9 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 	try {
 		const { user } = req.body
-		const wishlist = await Wishlist.findOne({user})
-		const cart = await Cart.findOne({user})
-		
+		const wishlist = await Wishlist.findOne({ user })
+		const cart = await Cart.findOne({ user })
+
 		res.status(200).json({
 			message: 'Fetched successfully',
 			status: 'ok',
@@ -433,9 +433,9 @@ export const create_order = asyncHandler(async (req, res, next) => {
 	try {
 		const {
 			cart,
-        billingAddress,
-        shippingAddress,
-        orderNotes
+			billingAddress,
+			shippingAddress,
+			orderNotes
 		} = req.body
 
 		const userExists = await User.find({ email })
