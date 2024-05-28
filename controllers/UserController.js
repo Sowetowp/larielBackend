@@ -428,3 +428,46 @@ export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 		next(error)
 	}
 })
+
+export const user_register = asyncHandler(async (req, res, next) => {
+	try {
+		const {
+			email,
+			password,
+		} = req.body
+
+		const userExists = await User.find({ email })
+		if (userExists.length > 0) {
+			throw new Error('User exists already')
+		}
+
+		const hashedPass = await bcrypt.hash(password, 10)
+		const username = email.split("@")
+		const user = await User.create({
+			email,
+			password: hashedPass,
+			displayName: username[0]
+		})
+
+		if (user) {
+			res.status(201).json({
+				message: 'User registered successfully',
+				status: 'ok',
+				data: {
+					id: user._id,
+					firstName: user.firstName,
+					lastName: user.lastName,
+					email: user.email,
+					displayName: user.displayName,
+					password: user.password,
+					token: generatetoken(user._id)
+				}
+			})
+		} else {
+			res.status(400)
+			throw new Error('Invalid data provided.')
+		}
+	} catch (error) {
+		next(error);
+	}
+})
