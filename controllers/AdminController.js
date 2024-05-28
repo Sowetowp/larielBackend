@@ -118,6 +118,7 @@ export const admin_upload_product = asyncHandler(async (req, res, next) => {
 			quantity,
 			description,
 			sizes,
+			model,
 			images: identity,
 			colors,
 		})
