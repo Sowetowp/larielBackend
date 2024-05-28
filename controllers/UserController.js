@@ -450,7 +450,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 
 		if (order) {
 			res.status(201).json({
-				message: 'User registered successfully',
+				message: 'Order sent successfully',
 				status: 'ok',
 				data: {
 					id: user._id,
