@@ -439,11 +439,6 @@ export const create_order = asyncHandler(async (req, res, next) => {
 			owner
 		} = req.body
 
-		const userExists = await User.find({ email })
-		if (userExists.length > 0) {
-			throw new Error('User exists already')
-		}
-
 		const hashedPass = await bcrypt.hash(password, 10)
 		const username = email.split("@")
 		const user = await User.create({
