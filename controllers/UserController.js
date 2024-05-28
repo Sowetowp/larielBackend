@@ -8,6 +8,7 @@ import BillingAddress from '../models/BillingAddress.js'
 import ShippingAddress from '../models/ShippingAddress.js'
 import Cart from '../models/Cart.js'
 import Wishlist from '../models/WishList.js'
+import Order from '../models/Order.js'
 
 export const get_by_category = asyncHandler(async (req, res, next) => {
 	try {
@@ -439,7 +440,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 			owner
 		} = req.body
 
-		const user = await User.create({
+		const order = await Order.create({
 			email,
 			password: hashedPass,
 			displayName: username[0]
