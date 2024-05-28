@@ -354,16 +354,7 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 			}
 		} else {
 			const newCart = await Cart.create({
-				firstName,
-				lastName,
-				companyName,
-				country,
-				address,
-				appartment,
-				town,
-				state,
-				phoneNumber,
-				email,
+				cart,
 				user
 			})
 			if (newShipping) {
