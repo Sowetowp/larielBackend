@@ -418,7 +418,7 @@ export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 			message: 'Fetched successfully',
 			status: 'ok',
 			data: {
-				billing: billing,
+				wishlist: wishlist,
 				shipping: shipping
 			}
 		})
