@@ -377,7 +377,7 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 			wishlist,
 			user
 		} = req.body
-
+console.log(wishlist)
 		const wishlistExists = await Wishlist.findOne({ user })
 		if (wishlistExists) {
 			wishlistExists.wishlist = wishlist || wishlistExists.wishlist
