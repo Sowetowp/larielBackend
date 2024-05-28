@@ -434,9 +434,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 		const {
 			cart,
         billingAddress,
-        shippingAddress: { 
-            type: mongoose.Schema.Types.ObjectId,
-			ref: 'ShippingAddress',
+        shippingAddress,
         },
 		orderNotes
 		} = req.body
