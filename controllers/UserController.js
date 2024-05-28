@@ -435,8 +435,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 			cart,
         billingAddress,
         shippingAddress,
-        ,
-		orderNotes
+        orderNotes
 		} = req.body
 
 		const userExists = await User.find({ email })
