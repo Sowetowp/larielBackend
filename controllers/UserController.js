@@ -435,7 +435,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 			cart,
         billingAddress,
         shippingAddress,
-        },
+        ,
 		orderNotes
 		} = req.body
 
