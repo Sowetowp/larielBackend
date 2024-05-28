@@ -452,15 +452,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 			res.status(201).json({
 				message: 'Order sent successfully',
 				status: 'ok',
-				data: {
-					id: user._id,
-					firstName: user.firstName,
-					lastName: user.lastName,
-					email: user.email,
-					displayName: user.displayName,
-					password: user.password,
-					token: generatetoken(user._id)
-				}
+				data: order
 			})
 		} else {
 			res.status(400)
