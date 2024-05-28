@@ -429,7 +429,7 @@ export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 	}
 })
 
-export const user_register = asyncHandler(async (req, res, next) => {
+export const create_order = asyncHandler(async (req, res, next) => {
 	try {
 		const {
 			email,
