@@ -169,6 +169,7 @@ export const user_auth = asyncHandler(async (req, res, next) => {
 			throw new Error('Incorrect password')
 		}
 		const wish = await Wishlist.findOne({user: user._id})
+		const car = await Wishlist.findOne({user: user._id})
 		res.status(201).json({
 			message: `Welcome ${user.displayName}`,
 			status: 'ok',
