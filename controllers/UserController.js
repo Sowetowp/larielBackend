@@ -7,6 +7,7 @@ import User from '../models/User.js'
 import BillingAddress from '../models/BillingAddress.js'
 import ShippingAddress from '../models/ShippingAddress.js'
 import Cart from '../models/Cart.js'
+import Wishlist from '../models/WishList.js'
 
 export const get_by_category = asyncHandler(async (req, res, next) => {
 	try {
@@ -377,11 +378,11 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 			user
 		} = req.body
 
-		const wishlistExists = await Cart.findOne({ user })
-		if (cartExists) {
-			cartExists.cart = cart || cartExists.cart
+		const wishlistExists = await Wishlist.findOne({ user })
+		if (wishlistExists) {
+			wishlistExists.wishlist = wishlist || wishlistExists.wishlist
 				
-			const updated = await cartExists.save()
+			const updated = await Wishlist.save()
 			if (updated) {
 				res.status(201).json({
 					message: 'Cart updated successfully',
