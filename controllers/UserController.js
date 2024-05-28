@@ -433,11 +433,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 	try {
 		const {
 			cart,
-        billingAddress: { 
-            type: mongoose.Schema.Types.ObjectId,
-			required: true,
-			ref: 'BillingAddress',
-        },
+        billingAddress,
         shippingAddress: { 
             type: mongoose.Schema.Types.ObjectId,
 			ref: 'ShippingAddress',
