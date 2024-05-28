@@ -411,7 +411,7 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 	try {
 		const { user } = req.body
-		const billing = await BillingAddress.findOne({user})
+		const wishlist = await Wishlist.findOne({user})
 		if(!billing){
 			throw new Error("Not found")
 		}
