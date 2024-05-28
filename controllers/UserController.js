@@ -408,7 +408,7 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 	}
 })
 
-export const get_billing_and_shipping = asyncHandler(async (req, res, next) => {
+export const get_wishlist_and_shipping = asyncHandler(async (req, res, next) => {
 	try {
 		const { user } = req.body
 		const billing = await BillingAddress.findOne({user})
