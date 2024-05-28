@@ -369,3 +369,40 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 		next(error);
 	}
 })
+
+export const cart_register = asyncHandler(async (req, res, next) => {
+	try {
+		const {
+			cart,
+			user
+		} = req.body
+
+		const cartExists = await Cart.findOne({ user })
+		if (cartExists) {
+			cartExists.cart = cart || cartExists.cart
+				
+			const updated = await cartExists.save()
+			if (updated) {
+				res.status(201).json({
+					message: 'Cart updated successfully',
+					status: 'ok',
+					data: updated
+				})
+			}
+		} else {
+			const newCart = await Cart.create({
+				cart,
+				user
+			})
+			if (newCart) {
+				res.status(201).json({
+					message: 'Cart created successfully',
+					status: 'ok',
+					data: newCart
+				})
+			}
+		}
+	} catch (error) {
+		next(error);
+	}
+})
