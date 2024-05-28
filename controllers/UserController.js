@@ -342,16 +342,8 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 
 		const cartExists = await Cart.findOne({ user })
 		if (cartExists) {
-			shipping.firstName = firstName || shipping.firstName,
-				shipping.lastName = lastName || shipping.lastName,
-				shipping.companyName = companyName || shipping.companyName,
-				shipping.country = country || shipping.country,
-				shipping.address = address || shipping.address,
-				shipping.appartment = appartment || shipping.appartment,
-				shipping.town = town || shipping.town,
-				shipping.state = state || shipping.state,
-				shipping.phoneNumber = phoneNumber || shipping.phoneNumber,
-				shipping.email = email || shipping.email
+			cartExists.cart = cart || cartExists.cart
+				
 			const updated = await shipping.save()
 			if (updated) {
 				res.status(201).json({
