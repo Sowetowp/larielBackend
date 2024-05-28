@@ -339,7 +339,7 @@ export const cart_register = asyncHandler(async (req, res, next) => {
 			user
 		} = req.body
 
-		const c = await ShippingAddress.findOne({ user })
+		const user = await ShippingAddress.findOne({ user })
 		if (shipping) {
 			shipping.firstName = firstName || shipping.firstName,
 				shipping.lastName = lastName || shipping.lastName,
