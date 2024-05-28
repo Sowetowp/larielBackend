@@ -391,15 +391,15 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 				})
 			}
 		} else {
-			const newCart = await Cart.create({
-				cart,
+			const newWishlist = await Wishlist.create({
+				wishlist,
 				user
 			})
-			if (newCart) {
+			if (newWishlist) {
 				res.status(201).json({
-					message: 'Cart created successfully',
+					message: 'Wishlist created successfully',
 					status: 'ok',
-					data: newCart
+					data: newWishlist
 				})
 			}
 		}
