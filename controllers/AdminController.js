@@ -178,6 +178,7 @@ export const update_product = asyncHandler(async (req, res, next) => {
 			sizes,
 			images,
 			colors,
+			model,
 			images2,
 			imagesToDelete,
 			prevPrice
