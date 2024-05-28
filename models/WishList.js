@@ -2,7 +2,7 @@ import mongoose from 'mongoose'
 
 const wishlistSchema = mongoose.Schema(
 	{
-		Wishlist: [{ type: Object, required: true }],
+		wishlist: [{ type: Object, required: true }],
 		user: {
 			type: mongoose.Schema.Types.ObjectId,
 			required: true,
