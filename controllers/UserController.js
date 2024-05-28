@@ -407,3 +407,24 @@ export const wishlist_register = asyncHandler(async (req, res, next) => {
 		next(error);
 	}
 })
+
+export const get_billing_and_shipping = asyncHandler(async (req, res, next) => {
+	try {
+		const { user } = req.body
+		const billing = await BillingAddress.findOne({user})
+		if(!billing){
+			throw new Error("Not found")
+		}
+		const shipping = await ShippingAddress.findOne({user})
+		res.status(200).json({
+			message: 'Reviews fetched successfully',
+			status: 'ok',
+			data: {
+				billing: billing,
+				shipping: shipping
+			}
+		})
+	} catch (error) {
+		next(error)
+	}
+})
