@@ -102,6 +102,7 @@ export const admin_upload_product = asyncHandler(async (req, res, next) => {
 			sizes,
 			images,
 			colors,
+			model
 		} = req.body
 
 		const uploadedImage = await uploadImagesToCloudinary(images);
