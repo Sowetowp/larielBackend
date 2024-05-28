@@ -332,7 +332,7 @@ export const get_billing_and_shipping = asyncHandler(async (req, res, next) => {
 	}
 })
 
-export const shipping_address_register = asyncHandler(async (req, res, next) => {
+export const cart_register = asyncHandler(async (req, res, next) => {
 	try {
 		const {
 			firstName,
