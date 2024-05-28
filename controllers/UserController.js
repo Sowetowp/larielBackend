@@ -413,10 +413,7 @@ export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
 		const { user } = req.body
 		const wishlist = await Wishlist.findOne({user})
 		const cart = await Cart.findOne({user})
-		if(!wishlist){
-			throw new Error("Not found")
-		}
-		const shipping = await ShippingAddress.findOne({user})
+		
 		res.status(200).json({
 			message: 'Reviews fetched successfully',
 			status: 'ok',
