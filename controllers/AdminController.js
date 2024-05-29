@@ -294,7 +294,7 @@ export const get_order = asyncHandler(async (req, res, next) => {
 			.populate("product", "name")
 			.skip((page - 1) * pageSize)
 			.limit(pageSize);
-		const totalOrders = await Order.countDocuments({ approved: false });
+		const totalOrders = await Order.countDocuments({ status: req.params.status });
 		const totalPages = Math.ceil(totalReviews / pageSize);
 		res.status(200).json({
 			message: 'Fetched successfully',
