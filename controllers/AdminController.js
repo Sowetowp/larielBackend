@@ -290,7 +290,7 @@ export const update_review = asyncHandler(async (req, res, next) => {
 export const get_order = asyncHandler(async (req, res, next) => {
 	try {
 		const order = await Order.find({ status: req.params.status })
-		.sort({ createdAt: -1 })
+			.sort({ createdAt: -1 })
 			.populate("product", "name")
 			.skip((page - 1) * pageSize)
 			.limit(pageSize);
