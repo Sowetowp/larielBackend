@@ -465,15 +465,12 @@ export const create_order = asyncHandler(async (req, res, next) => {
 
 export const get_order = asyncHandler(async (req, res, next) => {
 	try {
-		const order = await Order.findOne({ status: req.params.status })
+		const order = await Order.find({ status: req.params.status })
 
 		res.status(200).json({
 			message: 'Fetched successfully',
 			status: 'ok',
-			data: {
-				wishlist: wishlist.wishlist,
-				cart: cart.cart
-			}
+			data: order
 		})
 	} catch (error) {
 		next(error)
