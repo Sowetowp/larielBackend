@@ -5,6 +5,7 @@ import { deleteImagesFromCloudinary, uploadImagesToCloudinary } from '../config/
 import Admin from '../models/Admin.js'
 import Product from '../models/Products.js'
 import Review from '../models/Review.js'
+import Order from '../models/Order.js'
 
 export const admin_register = asyncHandler(async (req, res, next) => {
 	try {
@@ -283,5 +284,19 @@ export const update_review = asyncHandler(async (req, res, next) => {
 		}
 	} catch (error) {
 		next(error);
+	}
+})
+
+export const get_order = asyncHandler(async (req, res, next) => {
+	try {
+		const order = await Order.find({ status: req.params.status })
+		.skip(req.query.)
+		res.status(200).json({
+			message: 'Fetched successfully',
+			status: 'ok',
+			data: order
+		})
+	} catch (error) {
+		next(error)
 	}
 })
