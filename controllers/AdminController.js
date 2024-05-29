@@ -290,7 +290,12 @@ export const update_review = asyncHandler(async (req, res, next) => {
 export const get_order = asyncHandler(async (req, res, next) => {
 	try {
 		const order = await Order.find({ status: req.params.status })
-		.skip(req.query.)
+		.sort({ createdAt: -1 })
+			.populate("product", "name")
+			.skip((page - 1) * pageSize)
+			.limit(pageSize);
+		const totalReviews = await Review.countDocuments({ approved: false });
+		const totalPages = Math.ceil(totalReviews / pageSize);
 		res.status(200).json({
 			message: 'Fetched successfully',
 			status: 'ok',
