@@ -291,7 +291,7 @@ export const get_order = asyncHandler(async (req, res, next) => {
 	try {
 		const { page, pageSize } = req.query;
 		const order = await Order.find({ status: req.params.status })
-			.sort({ createdAt:  -1 })
+			.sort({ createdAt: req.params.status === "Pending" ? 1 : -1 })
 			.skip((page - 1) * pageSize)
 			.limit(pageSize);
 		const totalOrders = await Order.countDocuments({ status: req.params.status });
