@@ -462,3 +462,22 @@ export const create_order = asyncHandler(async (req, res, next) => {
 		next(error);
 	}
 })
+
+export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
+	try {
+		const { user } = req.body
+		const wishlist = await Wishlist.findOne({ user })
+		const cart = await Cart.findOne({ user })
+
+		res.status(200).json({
+			message: 'Fetched successfully',
+			status: 'ok',
+			data: {
+				wishlist: wishlist.wishlist,
+				cart: cart.cart
+			}
+		})
+	} catch (error) {
+		next(error)
+	}
+})
