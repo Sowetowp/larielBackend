@@ -466,7 +466,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 export const get_order = asyncHandler(async (req, res, next) => {
 	try {
 		const order = await Order.find({ status: req.params.status })
-
+		
 		res.status(200).json({
 			message: 'Fetched successfully',
 			status: 'ok',
