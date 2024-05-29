@@ -463,7 +463,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 	}
 })
 
-export const get_wishlist_and_cart = asyncHandler(async (req, res, next) => {
+export const get_order = asyncHandler(async (req, res, next) => {
 	try {
 		const { user } = req.body
 		const wishlist = await Wishlist.findOne({ user })
