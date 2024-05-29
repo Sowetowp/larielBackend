@@ -295,7 +295,7 @@ export const get_order = asyncHandler(async (req, res, next) => {
 			.skip((page - 1) * pageSize)
 			.limit(pageSize);
 		const totalOrders = await Order.countDocuments({ status: req.params.status });
-		const totalPages = Math.ceil(totalReviews / pageSize);
+		const totalPages = Math.ceil(totalOrders / pageSize);
 		res.status(200).json({
 			message: 'Fetched successfully',
 			status: 'ok',
