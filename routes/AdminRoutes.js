@@ -21,7 +21,7 @@ router.route('/updateitem/:id')
     .patch(adminProtect, update_product)
 router.route('/updatereview/:id')
     .patch(adminProtect, update_review)
-router.route('/getorder/:')
-    .patch(adminProtect, update_review)
+router.route('/getorder/:status')
+    .get(adminProtect, update_review)
 
 export default router
