@@ -301,7 +301,7 @@ export const get_order = asyncHandler(async (req, res, next) => {
 			status: 'ok',
 			data: {
 				order,
-				totalReviews,
+				totalOrders,
 				currentPage: Number(page),
 				totalPages,
 			}
