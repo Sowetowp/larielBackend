@@ -299,7 +299,12 @@ export const get_order = asyncHandler(async (req, res, next) => {
 		res.status(200).json({
 			message: 'Fetched successfully',
 			status: 'ok',
-			data: order
+			data: {
+				order,
+				totalReviews,
+				currentPage: Number(page),
+				totalPages,
+			}
 		})
 	} catch (error) {
 		next(error)
