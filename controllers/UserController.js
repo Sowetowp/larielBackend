@@ -439,7 +439,7 @@ export const create_order = asyncHandler(async (req, res, next) => {
 			orderNote,
 			owner
 		} = req.body
-console.log(owner)
+
 		const order = await Order.create({
 			cart,
 			billingAddress,
