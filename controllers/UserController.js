@@ -22,7 +22,7 @@ export const get_by_category = asyncHandler(async (req, res, next) => {
 		} else if (category !== "undefined") {
 			query.category = { $in: [category] }
 		}
-		console.log(query, category, subCategory )
+		console.log(query, category, subCategory)
 		const products = await Product.find(query)
 			.sort({ createdAt: -1 })
 			.skip((page - 1) * pageSize)
