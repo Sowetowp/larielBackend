@@ -324,7 +324,7 @@ export const update_order = asyncHandler(async (req, res, next) => {
 		}
 		const { status = order.status } = req.body;
 		order.status = status;
-		const updated = await review.save()
+		const updated = await order.save()
 		if (updated) {
 			res.status(201).json({
 				message: 'Success!!',
