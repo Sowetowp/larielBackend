@@ -1,5 +1,5 @@
 import express from 'express'
-import { admin_auth, admin_register, admin_upload_product, approved_reviews, delete_single_product, get_order, pending_reviews, update_product, update_review } from '../controllers/AdminController.js'
+import { admin_auth, admin_register, admin_upload_product, approved_reviews, delete_single_product, get_order, pending_reviews, update_order, update_product, update_review } from '../controllers/AdminController.js'
 import * as AdminValidation from "../Validations/adminValidation.js"
 import { adminProtect } from '../middlewares/auth_handlers.js'
 
@@ -24,6 +24,6 @@ router.route('/updatereview/:id')
 router.route('/getorder/:status')
     .get(adminProtect, get_order)
 router.route('/updateorder/:id')
-    .patch(adminProtect, update_review)
+    .patch(adminProtect, update_order)
 
 export default router
