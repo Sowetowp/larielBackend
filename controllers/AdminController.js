@@ -323,7 +323,7 @@ export const update_order = asyncHandler(async (req, res, next) => {
 			return;
 		}
 		const { status = order.status } = req.body;
-		review.approved = approved;
+		order.status = s;
 		const updated = await review.save()
 		if (updated) {
 			res.status(201).json({
