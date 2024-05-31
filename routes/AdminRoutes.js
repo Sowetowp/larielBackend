@@ -23,7 +23,7 @@ router.route('/updatereview/:id')
     .patch(adminProtect, update_review)
 router.route('/getorder/:status')
     .get(adminProtect, get_order)
-router.route('/updatereview/:id')
+router.route('/updateorder/:id')
     .patch(adminProtect, update_review)
 
 export default router
