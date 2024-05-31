@@ -322,7 +322,7 @@ export const update_order = asyncHandler(async (req, res, next) => {
 			res.status(404).json({ message: 'Oreder not found' });
 			return;
 		}
-		const { status = review.approved } = req.body;
+		const { status = order.status } = req.body;
 		review.approved = approved;
 		const updated = await review.save()
 		if (updated) {
