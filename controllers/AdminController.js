@@ -314,3 +314,25 @@ export const get_order = asyncHandler(async (req, res, next) => {
 		next(error)
 	}
 })
+
+export const update_review = asyncHandler(async (req, res, next) => {
+	try {
+		const review = await Review.findById(req.params.id)
+		if (!review) {
+			res.status(404).json({ message: 'Review not found' });
+			return;
+		}
+		const { approved = review.approved } = req.body;
+		review.approved = approved;
+		const updated = await review.save()
+		if (updated) {
+			res.status(201).json({
+				message: 'Success!!',
+				status: 'ok',
+				data: updated
+			})
+		}
+	} catch (error) {
+		next(error);
+	}
+})
