@@ -315,7 +315,7 @@ export const get_order = asyncHandler(async (req, res, next) => {
 	}
 })
 
-export const update_review = asyncHandler(async (req, res, next) => {
+export const update_order = asyncHandler(async (req, res, next) => {
 	try {
 		const review = await Review.findById(req.params.id)
 		if (!review) {
