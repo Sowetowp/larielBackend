@@ -317,7 +317,7 @@ export const get_order = asyncHandler(async (req, res, next) => {
 
 export const update_order = asyncHandler(async (req, res, next) => {
 	try {
-		const review = await Review.findById(req.params.id)
+		const order = await Order.findById(req.params.id)
 		if (!review) {
 			res.status(404).json({ message: 'Review not found' });
 			return;
